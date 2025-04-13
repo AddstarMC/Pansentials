@@ -5,7 +5,7 @@ import com.google.common.collect.Maps;
 import au.com.addstar.pansentials.MasterPlugin;
 import au.com.addstar.pansentials.Module;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;

@@ -4,8 +4,8 @@ import au.com.addstar.pansentials.CommandModule;
 import au.com.addstar.pansentials.Utilities;
 import com.google.common.base.Functions;
 import com.google.common.collect.Maps;
-import org.apache.commons.lang.StringUtils;
-import org.apache.commons.lang.math.RandomUtils;
+import org.apache.commons.lang3.RandomUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.bukkit.*;
 import org.bukkit.FireworkEffect.Type;
 import org.bukkit.command.Command;
@@ -111,7 +111,7 @@ public class KillModule extends CommandModule implements Listener
 			{
 				List<String> messages = config.getStringList(path);
 				if (!messages.isEmpty())
-					message = messages.get(RandomUtils.nextInt(messages.size()));
+					message = messages.get(RandomUtils.nextInt(0, messages.size()));
 			}
 			else
 				message = config.getString(path);
@@ -217,9 +217,9 @@ public class KillModule extends CommandModule implements Listener
 	private FireworkEffect newRandomFirework()
 	{
 		return FireworkEffect.builder()
-			.withColor(Color.fromRGB(RandomUtils.nextInt(255), RandomUtils.nextInt(255), RandomUtils.nextInt(255)))
-			.withFade(Color.fromRGB(RandomUtils.nextInt(255), RandomUtils.nextInt(255), RandomUtils.nextInt(255)))
-			.with(Type.values()[RandomUtils.nextInt(Type.values().length)])
+			.withColor(Color.fromRGB(RandomUtils.nextInt(0, 255), RandomUtils.nextInt(0, 255), RandomUtils.nextInt(0, 255)))
+			.withFade(Color.fromRGB(RandomUtils.nextInt(0, 255), RandomUtils.nextInt(0, 255), RandomUtils.nextInt(0, 255)))
+			.with(Type.values()[RandomUtils.nextInt(0, Type.values().length)])
 			.flicker(RandomUtils.nextBoolean())
 			.trail(RandomUtils.nextBoolean())
 			.build();

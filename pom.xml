@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>au.com.addstar</groupId>
   <artifactId>Pansentials</artifactId>
-    <version>1.3-SNAPSHOT</version>
+    <version>1.20-SNAPSHOT</version>
     <description>A multi module bukkit plugin thats a Swiss Army Knife based on Essentials
         Based on Spigot - ${spigot.version}
     </description>
@@ -12,8 +12,8 @@
         <!-- so as to allow local declaration when building locally-->
         <buildnumber/>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <spigot.api.version>1.16</spigot.api.version>
-        <spigot.version>1.16.5-R0.1-SNAPSHOT</spigot.version>
+        <spigot.api.version>1.20</spigot.api.version>
+        <spigot.version>1.20.1-R0.1-SNAPSHOT</spigot.version>
     </properties>
     <scm>
         <connection>scm:git:git@github.com:AddstarMC/pansentials.git</connection>
@@ -35,9 +35,10 @@
         </snapshotRepository>
     </distributionManagement>
     <repositories>
+        <!-- We want to use Paper API now -->
         <repository>
-            <id>spigot-repo</id>
-            <url>https://hub.spigotmc.org/nexus/content/groups/public/</url>
+            <id>papermc</id>
+            <url>https://repo.papermc.io/repository/maven-public/</url>
         </repository>
         <!-- Addstar repos -->
         <repository>
@@ -71,12 +72,23 @@
         </repository>
     </repositories>
     <dependencies>
-        <!-- We use Spigot now, not Bukkit -->
+        <!-- We want to include Paper now -->
         <dependency>
-            <groupId>org.spigotmc</groupId>
-            <artifactId>spigot-api</artifactId>
+            <groupId>io.papermc.paper</groupId>
+            <artifactId>paper-api</artifactId>
             <version>${spigot.version}</version>
             <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>net.objecthunter</groupId>
+            <artifactId>exp4j</artifactId>
+            <version>0.4.8</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>net.kyori</groupId>
+            <artifactId>adventure-text-minimessage</artifactId>
+            <version>4.14.0</version>
         </dependency>
 
         <!-- Used for Economy interop -->
@@ -119,13 +131,11 @@
                     <groupId>net.kyori</groupId>
                     <artifactId>adventure-text-minimessage</artifactId>
                 </exclusion>
+                <exclusion>
+                    <groupId>net.kyori</groupId>
+                    <artifactId>adventure-text</artifactId>
+                </exclusion>
             </exclusions>
-        </dependency>
-        <dependency>
-            <groupId>net.objecthunter</groupId>
-            <artifactId>exp4j</artifactId>
-            <version>0.4.8</version>
-            <scope>compile</scope>
         </dependency>
     </dependencies>
 
@@ -154,8 +164,8 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.8.1</version>
                 <configuration>
-                    <source>1.8</source>
-                    <target>1.8</target>
+                    <source>17</source>
+                    <target>17</target>
                 </configuration>
             </plugin>
             <plugin>

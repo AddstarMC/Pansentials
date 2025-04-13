@@ -11,7 +11,7 @@ import au.com.addstar.monolith.util.Raytrace.Hit;
 import au.com.addstar.monolith.util.Stringifier;
 import au.com.addstar.pansentials.CommandModule;
 import com.google.common.collect.Lists;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -117,7 +117,7 @@ public class SpawnMobModule extends CommandModule {
                   color = ChatColor.GRAY;
                 else
                   color = ChatColor.WHITE;
-                currRow += color+StringUtils.rightPad(s, 10)+ChatColor.RESET;
+                currRow += color+ StringUtils.rightPad(s, 10)+ChatColor.RESET;
                 rows.set(curr,currRow);
                 if (curr == 9)
                     curr = 0;
