@@ -30,10 +30,11 @@ import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitTask;
 
 import java.util.ArrayList;
-import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
-import java.util.Random;
+import java.util.Set;
 import java.util.UUID;
+import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Collectors;
 
 /**
@@ -42,8 +43,8 @@ import java.util.stream.Collectors;
  */
 public class HardMode implements Module, Listener, CommandExecutor, TabCompleter {
 
-  private List<UUID> enabledPlayers = new ArrayList<>();
-  private Collection<World> enabledWorlds = new ArrayList<>();
+  private Set<UUID> enabledPlayers = new HashSet<>();
+  private Set<World> enabledWorlds = new HashSet<>();
   private MasterPlugin plugin;
   private BukkitTask mainTask = null;
   private List<BukkitTask> tasks = new ArrayList<>();
@@ -66,6 +67,7 @@ public class HardMode implements Module, Listener, CommandExecutor, TabCompleter
     tasks.forEach(bukkitTask -> {
       if (!bukkitTask.isCancelled()) bukkitTask.cancel();
     });
+    tasks.clear();
     PluginCommand c = plugin.getCommand("hardmode");
     if(c !=null) {
       c.setExecutor(null);
@@ -90,16 +92,14 @@ public class HardMode implements Module, Listener, CommandExecutor, TabCompleter
   }
 
   private void checkandStopTask() {
-    if (enabledWorlds.isEmpty()) {
-      if (mainTask != null) {
-        mainTask.cancel();
-        return;
-      }
-    }
-    if (enabledPlayers.isEmpty()) {
+    if (enabledWorlds.isEmpty() || enabledPlayers.isEmpty()) {
       if (mainTask != null) {
         mainTask.cancel();
       }
+      tasks.forEach(t -> {
+        if (!t.isCancelled()) t.cancel();
+      });
+      tasks.clear();
     }
   }
 
@@ -124,12 +124,14 @@ public class HardMode implements Module, Listener, CommandExecutor, TabCompleter
       if (event.getEntity().hasMetadata("fireworkTaskID")) {
         event.getEntity().getMetadata("fireworkTaskID")
             .stream()
-            .filter(metadataValue -> metadataValue.getOwningPlugin().getName().equals(plugin.getName()))
+            .filter(meta -> meta.getOwningPlugin().getName().equals(plugin.getName()))
             .findFirst()
-            .ifPresent(metadataValue -> tasks.forEach(bukkitTask -> {
-                  if (bukkitTask.getTaskId() == metadataValue.asInt()) {
-                    bukkitTask.cancel();
+            .ifPresent(meta -> tasks.removeIf(task -> {
+                  if (task.getTaskId() == meta.asInt()) {
+                    if (!task.isCancelled()) task.cancel();
+                    return true;
                   }
+                  return false;
                 })
             );
       }
@@ -138,8 +140,8 @@ public class HardMode implements Module, Listener, CommandExecutor, TabCompleter
 
   @EventHandler(ignoreCancelled = true)
   public void onPlayerQuit(PlayerQuitEvent event) {
-    checkandStopTask();
     enabledPlayers.remove(event.getPlayer().getUniqueId());
+    checkandStopTask();
   }
 
   @Override
@@ -205,10 +207,11 @@ public class HardMode implements Module, Listener, CommandExecutor, TabCompleter
   }
 
   private Location getRandomLocation(Location loc, int radius) {
-    int xpos = new Random().nextInt(1);
-    int zpos = new Random().nextInt(1);
-    int xran = new Random().nextInt(radius);
-    int zran = new Random().nextInt(radius);
+    ThreadLocalRandom rand = ThreadLocalRandom.current();
+    int xpos = rand.nextInt(2);
+    int zpos = rand.nextInt(2);
+    int xran = rand.nextInt(radius);
+    int zran = rand.nextInt(radius);
     if (xpos == 1) {
       if (zpos == 1) {
         return new Location(loc.getWorld(), loc.getX() + xran, loc.getY(), loc.getZ() + zran);
@@ -224,11 +227,12 @@ public class HardMode implements Module, Listener, CommandExecutor, TabCompleter
   }
 
   private void createEvents(Player p) {
-    int num = new Random().nextInt(10);
+    ThreadLocalRandom rand = ThreadLocalRandom.current();
+    int num = rand.nextInt(10);
     for (int i = 0; i < num; i++) {
       int radius = 10;
       Location loc = getRandomLocation(p.getLocation(), radius);
-      int event = new Random().nextInt(5);
+      int event = rand.nextInt(5);
       if (loc.getWorld() == null) return;
       switch (event) {
         case 0:

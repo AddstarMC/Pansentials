@@ -41,10 +41,11 @@ public class PowertoolModule implements Module, CommandExecutor, Listener {
 		
 		powertools = Maps.newHashMap();
 	}
-
+	
 	@Override
-	public void onDisable() {
+		public void onDisable() {
 		plugin.getCommand("powertool").setExecutor(null);
+		powertools.clear();
 	}
 
 	@Override

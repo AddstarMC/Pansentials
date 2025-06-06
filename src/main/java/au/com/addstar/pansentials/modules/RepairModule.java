@@ -61,19 +61,22 @@ public class RepairModule implements Module, CommandExecutor {
 	}
 	
 	private boolean repairItem(ItemStack stack) {
+		if (stack == null) return false;
 		if (!(stack.getItemMeta() instanceof Damageable)) return false;
 		Damageable dStack = (Damageable) stack.getItemMeta();
 		dStack.setDamage(0);
+		stack.setItemMeta(dStack);
 		return true;
 	}
 	
 	private boolean needsRepair(ItemStack stack) {
 		if (stack == null)
 			return false;
-		if (!(stack.getItemMeta() instanceof Damageable) && ((Damageable) stack.getItemMeta()).getDamage() == 0) {
+
+		if (!(stack.getItemMeta() instanceof Damageable))
 			return false;
-		} else {
-			return true;
-		}
+
+		Damageable meta = (Damageable) stack.getItemMeta();
+			return meta.getDamage() != 0;
 	}
 }
