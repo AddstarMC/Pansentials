@@ -47,7 +47,7 @@ public class DropItemModule implements Module, CommandExecutor, Listener{
 		active.clear();
 		active = null;
 		
-		for(String key : items.keySet()){
+		for (String key : new ArrayList<>(items.keySet())) {
 			removeItem(key);
 		}
 	}
