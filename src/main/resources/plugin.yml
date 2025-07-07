@@ -115,6 +115,8 @@ permissions:
     default: op
   pansentials.playerlist:
     default: true
+  pansentials.calc:
+    default: op
 commands:
   pansentials:
     usage: /<command>
