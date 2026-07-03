@@ -35,7 +35,7 @@ public class HealModule implements Module, CommandExecutor{
 	}
 	
 	private void heal(Player player) {
-		player.setHealth(player.getAttribute(Attribute.GENERIC_MAX_HEALTH).getDefaultValue());
+		player.setHealth(player.getAttribute(Attribute.MAX_HEALTH).getDefaultValue());
 		player.setRemainingAir(player.getMaximumAir());
 		player.setFoodLevel(20);
 		player.setSaturation(20f);

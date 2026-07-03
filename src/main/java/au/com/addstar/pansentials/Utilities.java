@@ -168,7 +168,7 @@ public class Utilities
 			case AIR:
 			case SUGAR_CANE:
 			case WATER:
-			case GRASS:
+			case SHORT_GRASS:
 			case WHEAT:
 			case BEETROOT:
 			case SEAGRASS:

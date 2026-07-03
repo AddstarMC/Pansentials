@@ -155,7 +155,7 @@ public class KillModule extends CommandModule implements Listener
 	
 	private void explodeKill(Player target, String message)
 	{
-		target.getWorld().spawnParticle(Particle.EXPLOSION_HUGE, target.getLocation(), 100);
+		target.getWorld().spawnParticle(Particle.EXPLOSION_EMITTER, target.getLocation(), 100);
 		target.getWorld().playSound(target.getLocation(), Sound.ENTITY_GENERIC_EXPLODE, 1, 30);
 		
 		kill(target, message);

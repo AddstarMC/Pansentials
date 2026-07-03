@@ -111,8 +111,6 @@ permissions:
     default: op
   pansentials.burn:
     default: op
-  pansentials.itemattribute:
-    default: op
   pansentials.playerlist:
     default: true
   pansentials.calc:
@@ -218,12 +216,6 @@ commands:
     usage: /<command> <player> <time> [<allowdamage>] [<message>]
     permission: pansentials.burn
     aliases: [ignite]
-  itemnbt:
-    usage: /<command> [get|set] [tags,tags...]
-    permission: pansentials.listnbt
-  itemattribute:
-    usage: /<command> <list|<attribute> [setbase|add|remove]>
-    permission: pansentials.itemattribute
   hardmode:
     usage: /<command> <enable|disable>
     permission: pansentials.hardmode

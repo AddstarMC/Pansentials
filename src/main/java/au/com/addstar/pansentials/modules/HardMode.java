@@ -252,28 +252,28 @@ public class HardMode implements Module, Listener, CommandExecutor, TabCompleter
           z.setCustomName(ChatColor.RED + "Zombie King" + ChatColor.RESET);
           z.setTarget(p);
           z.addPotionEffect(new PotionEffect(PotionEffectType.ABSORPTION, 300, 3, true, true, true));
-          AttributeInstance armor = z.getAttribute(Attribute.GENERIC_ARMOR_TOUGHNESS);
+          AttributeInstance armor = z.getAttribute(Attribute.ARMOR_TOUGHNESS);
           if (armor != null) {
             armor.setBaseValue(armor.getValue() * 3);
           }
-          AttributeInstance attackSpeed = z.getAttribute(Attribute.GENERIC_ATTACK_SPEED);
+          AttributeInstance attackSpeed = z.getAttribute(Attribute.ATTACK_SPEED);
           if (attackSpeed != null) {
             attackSpeed.setBaseValue(attackSpeed.getValue() * 2);
           }
-          AttributeInstance attackForce = z.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE);
+          AttributeInstance attackForce = z.getAttribute(Attribute.ATTACK_DAMAGE);
           if (attackForce != null) {
             attackForce.setBaseValue(attackForce.getValue() * 3);
           }
-          z.getAttribute(Attribute.GENERIC_FOLLOW_RANGE).setBaseValue(300);
-          z.getAttribute(Attribute.ZOMBIE_SPAWN_REINFORCEMENTS).setBaseValue(1D);
-          AttributeInstance health = z.getAttribute(Attribute.GENERIC_MAX_HEALTH);
+          z.getAttribute(Attribute.FOLLOW_RANGE).setBaseValue(300);
+          z.getAttribute(Attribute.SPAWN_REINFORCEMENTS).setBaseValue(1D);
+          AttributeInstance health = z.getAttribute(Attribute.MAX_HEALTH);
           if (health != null) {
             health.setBaseValue(health.getBaseValue() * 3);
           }
           BukkitTask task = Bukkit.getScheduler().runTaskTimer(plugin, () -> {
             if (z.isDead())
               return;
-            Firework firework = (Firework) z.getLocation().getWorld().spawnEntity(z.getLocation(), EntityType.FIREWORK);
+            Firework firework = (Firework) z.getLocation().getWorld().spawnEntity(z.getLocation(), EntityType.FIREWORK_ROCKET);
             firework.getFireworkMeta().addEffect(FireworkEffect.builder().withColor(Color.RED).with(FireworkEffect.Type.BALL).build());
 
           }, 20, 40);
